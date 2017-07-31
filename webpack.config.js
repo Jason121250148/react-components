@@ -1,18 +1,13 @@
 var path = require('path')
 var webpack = require('webpack')
-
-// function resolve(dir) {
-//   return path.join(__dirname, '..', dir)
-// }
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
     app: [
       './src/index.js',
       './src/index.html',
-      // 'react-hot-loader/patch',
-      // 'webpack-dev-server/client',
-      // 'webpack/hot/only-dev-server',
+      './src/res/index.less'
     ]
   },
   output: {
@@ -27,8 +22,6 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        // include: [resolve('src')],
-        // exclude: [resolve('node_modules')],
         use: ['babel-loader'],
       },
       {
@@ -39,11 +32,17 @@ module.exports = {
           'html-loader'
         ]
       },
+      {
+        test: /\.(less|css)$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'less-loader']
+        })
+      },
     ],
   },
+  plugins: [
+    new ExtractTextPlugin('css/[name].css')
+  ],
   devtool: 'inline-source-map',
-  // plugins: [
-  // new webpack.HotModuleReplacementPlugin(),
-  // new webpack.NamedModulesPlugin(),
-  // ],
 }
