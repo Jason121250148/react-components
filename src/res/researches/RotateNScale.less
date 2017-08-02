@@ -1,5 +1,70 @@
+body {
+  background-color: #ddd;
+}
 .re-rotate-scale {
-  width: 400px;
-  height: 300px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 900px;
+  height: 500px;
   border: 1px solid grey;
+  transform: scale(1.5);
+  transform-origin: left top;
+  background-color: #bbb;
+
+  &__content {
+    display: inline-block;
+    padding-left: 200px;
+    padding-top: 100px;
+    height: 25px;
+    width: 50px;
+    margin: auto;
+  }
+
+  &__container {
+    position: absolute;
+    top: 150px;
+    left: 450px;
+    width: 900px;
+    height: 500px;
+    overflow: scroll;
+    border: 1px solid green;
+  }
+
+  &__canvas {
+    position: absolute;
+    top: 0;
+    left: 50px;
+    width: 400px;
+    height: 250px;
+  }
+
+  &__item {
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 450px;
+    height: 250px;
+    background-color: white;
+  }
+
+  &__rotate {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 100px;
+    background-color: black;
+
+  }
+  &__rotate-item {
+    display: inline-block;
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    transform: rotate(30deg);
+  }
 }
