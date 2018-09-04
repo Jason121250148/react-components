@@ -1,70 +1,35 @@
 body {
-  background-color: #ddd;
+  background-color: #ccc;
 }
 .re-rotate-scale {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  width: 900px;
-  height: 500px;
-  border: 1px solid grey;
-  transform: scale(1.5);
-  transform-origin: left top;
-  background-color: #bbb;
-
-  &__content {
-    display: inline-block;
-    padding-left: 200px;
-    padding-top: 100px;
-    height: 25px;
-    width: 50px;
-    margin: auto;
+  width: 100%;
+  height: 100%;
+  
+  &__container {
+    width: 5000px;
+    height: 4500px;
+    background-color: white;
   }
 
-  &__container {
+  &__screens {
     position: absolute;
-    top: 150px;
-    left: 450px;
-    width: 900px;
-    height: 500px;
+    top: 0;
+    left: 300px;
+    width: 1400px;
+    height: 800px;
     overflow: scroll;
     border: 1px solid green;
   }
 
-  &__canvas {
-    position: absolute;
-    top: 0;
-    left: 50px;
-    width: 400px;
-    height: 250px;
-  }
-
-  &__item {
-    display: inline-block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 450px;
-    height: 250px;
-    background-color: white;
-  }
-
-  &__rotate {
-    display: inline-block;
-    position: absolute;
-    right: 0;
+  &__view {
+    position: relative;
     top: 100px;
-    background-color: black;
-
-  }
-  &__rotate-item {
-    display: inline-block;
-    background-color: red;
-    width: 100px;
-    height: 100px;
-    transform: rotate(30deg);
+    left: 300px;
+    width: 400px;
+    height: 400px;
+    border: 1px solid grey;
+    background-color: #ddd;
+    transform: scale(1.5);
+    transform-origin: left top;
   }
 }

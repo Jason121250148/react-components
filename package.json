@@ -49,6 +49,7 @@
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-rnd": "^9.0.2",
     "react-router": "^4.1.1"
   }
 }
