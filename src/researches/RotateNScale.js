@@ -1,35 +1,40 @@
 import React, { PureComponent } from 'react'
 import { findDOMNode } from 'react-dom'
 
+import { MagicBox } from '../components'
+
 class RotateNScale extends PureComponent {
 
-  setDiv = (div) => {
-    this.div = div
+  handleDrag = (pos) => {
+    console.log('x:', pos.x, ' ', 'y:', pos.y)
   }
 
-  setCanvas = (canvas) => {
-    this.canvas = canvas
-    var cxt = this.canvas.getContext("2d");
-    cxt.beginPath();
-    cxt.moveTo(0, 125);
-    cxt.lineTo(200, 0);
-    cxt.stroke();
-  }
-
-  handleClick = (e) => {
-    const $item = document.createElement('div')
-    $item.classList.add('re-rotate-scale__item')
-    this.div.append($item)
+  handleResize = (res) => {
+    console.log('x:', res.x, ' ', 'y:', res.y, ' ', 'width:', res.width, ' ', 'height:', res.height)
   }
 
   render() {
     return (
-      <div className="re-rotate-scale__container">
-        <div ref={this.setDiv} className="re-rotate-scale" onClick={this.handleClick}>
-          <div className="re-rotate-scale__rotate">
-             <div className="re-rotate-scale__rotate-item"></div> 
+      <div className="re-rotate-scale">
+        <div className="re-rotate-scale__screens">
+          <div className="re-rotate-scale__container">
+            <div className="re-rotate-scale__view">
+              <MagicBox
+                default={{
+                  x: -150,
+                  y: 100,
+                  width: 100,
+                  height: 100,
+                }}
+                z={10}
+                bounds=".re-rotate-scale__container"
+                onResize={this.handleResize}
+                onDrag={this.handleDrag}
+              />
+            </div>
           </div>
         </div>
+        
       </div>
     )
   }
