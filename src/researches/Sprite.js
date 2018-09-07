@@ -5,9 +5,15 @@ import { findDOMNode } from 'react-dom'
 const WIDTH = 1260
 const HEIGHT = 3150
 class Sprite extends PureComponent {
-  state = {
-    imgs: [],
-    imgSrc: '',
+  constructor(props) {
+    super(props)
+    const img = new Image()
+    img.crossOrigin = 'Anonymous' // 跨域
+    img.src = 'https://fp-dev.webapp.163.com/a13/file/5b75393854b2d31f7e2f5e54ti6W77YP'
+    this.state = {
+      imgs: [img],
+      imgSrc: '',
+    }
   }
   handleImgUpload = (e) => {
     const file = e.target.files[0]
@@ -23,11 +29,16 @@ class Sprite extends PureComponent {
     }
     reader.readAsDataURL(file)
   }
-  genSpriteCanvas = () => {
+  genSpriteCanvas = (clean = true) => {
+    if (clean) {
+      // 清空canvas
+      this.$canvasContext.clearRect(0, 0, WIDTH, HEIGHT)
+    }
     const { imgs } = this.state
-    imgs.forEach(img => {
+    imgs.forEach((img, index) => {
       this.$canvasContext.drawImage(img, 0, 0, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT)
     })
+
     const src = this.$canvas.toDataURL('image/png')
     this.setState({ imgSrc: src })
   }

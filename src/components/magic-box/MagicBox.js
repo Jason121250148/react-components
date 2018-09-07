@@ -1,7 +1,8 @@
 /**
  * 可拖拽、自由更改大小、可旋转、可嵌套的外框
  */
-import React, { PureComponent, PropTypes } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import Rnd from 'react-rnd'
 import { findDOMNode } from 'react-dom'
 import noop from 'lodash/noop'
