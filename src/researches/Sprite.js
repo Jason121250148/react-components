@@ -18,24 +18,25 @@ class Sprite extends PureComponent {
   handleImgUpload = (e) => {
     const file = e.target.files[0]
     const reader = new FileReader()
-    reader.onload = (e) => {
+    reader.onload = (e2) => {
       const image = new Image()
       image.onload = () => {
         this.setState({
-          imgs: [...this.state.imgs, image]
+          imgs: [...this.state.imgs, image],
         }, this.genSpriteCanvas)
       }
-      image.src = e.target.result // base64
+      image.src = e2.target.result // base64
     }
     reader.readAsDataURL(file)
   }
+
   genSpriteCanvas = (clean = true) => {
     if (clean) {
       // 清空canvas
       this.$canvasContext.clearRect(0, 0, WIDTH, HEIGHT)
     }
     const { imgs } = this.state
-    imgs.forEach((img, index) => {
+    imgs.forEach((img) => {
       this.$canvasContext.drawImage(img, 0, 0, WIDTH, HEIGHT, 0, 0, WIDTH, HEIGHT)
     })
 
@@ -54,9 +55,11 @@ class Sprite extends PureComponent {
     return (
       <div className="sprite">
         <input type="file" onChange={this.handleImgUpload} />
+        <div className="red blue">first</div>
+        <div className="blue red">second</div>
         <div className="sprite__preview">
           <canvas className="sprite__canvas" ref={this.setCanvasRef} />
-          <img src={imgSrc} className="sprite__img" />
+          <img src={imgSrc} alt="预览图" className="sprite__img" />
         </div>
       </div>
     )

@@ -28,6 +28,9 @@ class MagicBox extends PureComponent {
 
   static defaultProps = {
     prefixCls: 'na-magic-box',
+    className: '',
+    style: {},
+    default: {},
     bounds: null, // 默认没有边界，可以随意拖拽
 
     disableRotating: false,
@@ -192,9 +195,9 @@ class MagicBox extends PureComponent {
       const v1 = [rotateX - originX, rotateY - originY]
       const v2 = [mouseX - originX, mouseY - originY]
       const direction = (v1[1] * v2[0] - v1[0] * v2[1]) > 0 ? 1 : -1 // 判断旋转方向，顺时针加，逆时针减
-      let cos = (v1[0] * v2[0] + v1[1] * v2[1]) /
-        (Math.sqrt(v1[0] * v1[0] + v1[1] * v1[1]) *
-          Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1])) // 计算旋转角
+      let cos = (v1[0] * v2[0] + v1[1] * v2[1])
+        / (Math.sqrt(v1[0] * v1[0] + v1[1] * v1[1])
+        * Math.sqrt(v2[0] * v2[0] + v2[1] * v2[1])) // 计算旋转角
       cos = isNaN(cos) ? 1 : cos // 如果v1和v2都是【0，0】，被认为没有旋转
       cos = cos > 1 ? 1 : cos
       cos = cos < -1 ? -1 : cos // cos的计算可能出现1.0000...02这样的数值，其实为1

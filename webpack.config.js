@@ -20,6 +20,15 @@ module.exports = {
   },
   module: {
     rules: [
+      { // js代码语法检查
+        test: /\.jsx?$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+        options: {
+          formatter: require('eslint-friendly-formatter'),
+        },
+      },
       {
         test: /\.jsx?$/,
         use: ['babel-loader'],

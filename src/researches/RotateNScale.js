@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import { findDOMNode } from 'react-dom'
 
 import { MagicBox } from '../components'
 
@@ -34,7 +33,6 @@ class RotateNScale extends PureComponent {
             </div>
           </div>
         </div>
-        
       </div>
     )
   }
