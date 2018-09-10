@@ -79,6 +79,7 @@ const eslintrc = {
     'react/destructuring-assignment': 0,
     'eol-last': 0,
     'no-console': 0,
+    'max-len': 0,
   },
   globals: {
     __DEV__: true,

@@ -7,11 +7,11 @@ const HEIGHT = 3150
 class Sprite extends PureComponent {
   constructor(props) {
     super(props)
-    const img = new Image()
-    img.crossOrigin = 'Anonymous' // 跨域
-    img.src = 'https://fp-dev.webapp.163.com/a13/file/5b75393854b2d31f7e2f5e54ti6W77YP'
+    // const img = new Image()
+    // img.crossOrigin = 'Anonymous' // 跨域
+    // img.src = 'https://fp-dev.webapp.163.com/a13/file/5b75393854b2d31f7e2f5e54ti6W77YP'
     this.state = {
-      imgs: [img],
+      imgs: [],
       imgSrc: '',
     }
   }
@@ -55,8 +55,6 @@ class Sprite extends PureComponent {
     return (
       <div className="sprite">
         <input type="file" onChange={this.handleImgUpload} />
-        <div className="red blue">first</div>
-        <div className="blue red">second</div>
         <div className="sprite__preview">
           <canvas className="sprite__canvas" ref={this.setCanvasRef} />
           <img src={imgSrc} alt="预览图" className="sprite__img" />

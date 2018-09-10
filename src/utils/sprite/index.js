@@ -1,3 +1,4 @@
 import mergeImgs from './mergeImgs'
+import { genPreviewSrc } from './paper-doll'
 
-export { mergeImgs }
+export { mergeImgs, genPreviewSrc }
