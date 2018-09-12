@@ -1,5 +1,21 @@
 .sprite-test {
-  width: 630;
-  height: 1575;
-  display: inline-block;
+  &__title {
+    font-size: 20px;
+    color: blue;
+    background: greenyellow;
+  }
+  &__sprite-title {
+    font-size: 15px;
+    color: red;
+    background: greenyellow;
+  }
+  &__merge-img, &__sprite-img {
+    width: 630;
+    height: 1575;
+    display: inline-block;
+  }
+  &__sprite-list {
+    width: 100%;
+    overflow: auto;
+  }
 }

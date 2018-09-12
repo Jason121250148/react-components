@@ -29,7 +29,7 @@ const defaultImgSets = {
  * }
  * @returns {base64} 合成图片数据
  */
-function mergeImgs(options, imgSets) {
+function mergeImgs(options = {}, imgSets = []) {
   const isLegalOptions = requiredParamsCheck(options, ['width', 'height'])
   const isLegalImgSets = requiredParamsCheck(imgSets, ['url', 'width', 'height', 'left', 'top'])
   if (!isLegalOptions) return Promise.reject(new Error('options param is not completed, please check'))
@@ -39,8 +39,8 @@ function mergeImgs(options, imgSets) {
   let finalImgSets = map(imgSets, img => merge({}, defaultImgSets, img))
 
   const canvas = document.createElement('canvas')
-  canvas.width = finalOptions.width
-  canvas.height = finalOptions.height
+  canvas.width = finalOptions.hScale >= 100 ? finalOptions.width * finalOptions.hScale / 100 : finalOptions.width
+  canvas.height = finalOptions.vScale >= 100 ? finalOptions.height * finalOptions.vScale / 100 : finalOptions.height
   const canvasContext = canvas.getContext('2d')
 
   // 根据index和数组中的顺序将finalImgSets升序排序
@@ -59,9 +59,15 @@ function mergeImgs(options, imgSets) {
         let { left, top, width, height } = img
         if (img.canScale) {
           left = finalOptions.scaleAnchorX + (left - finalOptions.scaleAnchorX) * (finalOptions.hScale / 100)
-          top = finalOptions.scaleAnchorX + (top - finalOptions.scaleAnchorX) * (finalOptions.vScale / 100)
+          top = finalOptions.scaleAnchorY + (top - finalOptions.scaleAnchorY) * (finalOptions.vScale / 100)
           width *= (finalOptions.hScale / 100)
           height *= (finalOptions.vScale / 100)
+        }
+        if (finalOptions.hScale >= 100) {
+          left += finalOptions.scaleAnchorX / finalOptions.width * (finalOptions.hScale - 100) / 100 * finalOptions.width
+        }
+        if (finalOptions.vScale >= 100) {
+          top += finalOptions.scaleAnchorY / finalOptions.height * (finalOptions.vScale - 100) / 100 * finalOptions.height
         }
         canvasContext.drawImage(image, 0, 0, img.width, img.height, left, top, width, height)
       })

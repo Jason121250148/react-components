@@ -1,4 +1,5 @@
-import mergeImgs from './mergeImgs'
-import { genPreviewSrc } from './paper-doll'
+import mergeImgs from './merge-imgs'
+import generateSprite from './generate-sprite'
+import { genPreviewSrc, genSpriteSets } from './paper-doll'
 
-export { mergeImgs, genPreviewSrc }
+export { mergeImgs, generateSprite, genPreviewSrc, genSpriteSets }
