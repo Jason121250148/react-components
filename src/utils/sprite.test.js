@@ -49,6 +49,105 @@ class SpriteTest extends PureComponent {
         canScale: true,
         index: 0,
       },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 370,
+        top: 1280,
+        canScale: true,
+        index: 1,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 470,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 570,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 670,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 770,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 870,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 970,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 1070,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 1170,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 1270,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
+      {
+        url: 'https://fp-dev.webapp.163.com/a13/file/5b961ae354b2d36fda4b5e84AjQFkpxP',
+        width: 665,
+        height: 1725,
+        left: 1370,
+        top: 1280,
+        canScale: true,
+        index: 0,
+      },
     ]
     const presetUnits = {
       1: [
@@ -82,6 +181,7 @@ class SpriteTest extends PureComponent {
       }
     })
     genSpriteSets(options, imgUnits, presetUnits).then((res) => {
+      console.log(res)
       if (isEmpty(this.state.spriteSets)) {
         // 这里每次调用genSpriteSets方法会生成一个uuidv4所以判断isEqual时永远是不同的，导致无限刷新，因此用isEmpty
         this.setState({

@@ -1,17 +1,17 @@
-import { forEach, cloneDeep, merge } from 'lodash'
+import { forEach, cloneDeep, merge, has } from 'lodash'
 
 import { requiredParamsCheck } from './common'
 
-const defaultOptions = {
-  maxWidth: Math.MAX_SAFE_INTEGER,
-  maxHeight: Math.MAX_SAFE_INTEGER,
-}
 function spritePack(options, blocks = []) {
   const legalOptions = requiredParamsCheck(options, [])
   const legalBlocks = requiredParamsCheck(blocks, ['width', 'height'])
   if (!legalOptions) return new Error('options param is not completed, please check')
   if (!legalBlocks) return new Error('blocks param is not completed, please check')
-  const finalOptions = merge({}, defaultOptions, options)
+  if ((has(options, 'maxWidth') && !has(options, 'maxHeight'))
+      || (!has(options, 'maxWidth') && has(options, 'maxHeight'))) {
+    return new Error('options should have both maxWidth and maxHeight or none of them')
+  }
+  const finalOptions = merge({}, options)
 
   let totalRoot
   function findNode(root, width, height) {
@@ -94,26 +94,30 @@ function spritePack(options, blocks = []) {
   newBlocks.sort((a, b) => b.width * b.height - a.width * a.height)
   const width  = newBlocks.length > 0 ? newBlocks[0].width : 0
   const height = newBlocks.length > 0 ? newBlocks[0].height : 0
-  totalRoot = { x: 0, y: 0, width, height }
   const { maxWidth, maxHeight } = finalOptions
+  const hasMax = has(finalOptions, 'maxWidth') && has(finalOptions, 'maxHeight')
+  if (hasMax) {
+    totalRoot = { x: 0, y: 0, width: maxWidth, height: maxHeight }
+  } else {
+    totalRoot = { x: 0, y: 0, width, height }
+  }
   const spriteBlocks = [] // 已经写入雪碧图的block
   const unSpriteBlocks = [] // 由于超出大小未写入雪碧图的block
   forEach(newBlocks, (block) => {
     const newBlock = cloneDeep(block)
-    if (totalRoot.width + newBlock.width > maxWidth || totalRoot.height + newBlock.height > maxHeight) {
-      unSpriteBlocks.push(newBlock)
+    const node = findNode(totalRoot, block.width, block.height)
+    if (node) {
+      const fit = splitNode(node, block.width, block.height)
+      newBlock.x = fit.x
+      newBlock.y = fit.y
+      spriteBlocks.push(newBlock)
+    } else if (hasMax) {
+        unSpriteBlocks.push(newBlock)
     } else {
-      const node = findNode(totalRoot, block.width, block.height)
-      if (node) {
-        const fit = splitNode(node, block.width, block.height)
-        newBlock.x = fit.x
-        newBlock.y = fit.y
-      } else {
         const fit = growNode(block.width, block.height)
         newBlock.x = fit.x
         newBlock.y = fit.y
-      }
-      spriteBlocks.push(newBlock)
+        spriteBlocks.push(newBlock)
     }
   })
 
