@@ -5,7 +5,7 @@ import mergeImgs from './merge-imgs'
 import generateSprite from './generate-sprite'
 
 const defaultOptions = {
-  previewScale: 100,
+  // previewScale: 100,
 }
 
 /**
@@ -29,47 +29,48 @@ const defaultOptions = {
 const genPreviewSrc = (options = {}, imgUnits = []) => {
   const isLegalOptions = requiredParamsCheck(options, ['width', 'height'])
   if (!isLegalOptions) return Promise.reject(new Error('options param is not completed, please check'))
-  const finalOptions = merge({}, defaultOptions, { viewWidth: options.width, viewHeight: options.height }, options)
-  const scaleWidth = finalOptions.hScale >= 100 ? finalOptions.width * finalOptions.hScale / 100 : finalOptions.width
-  const scaleHeight = finalOptions.vScale >= 100 ? finalOptions.height * finalOptions.vScale / 100 : finalOptions.height
+  const finalOptions = merge({}, defaultOptions, options)
+  // const scaleWidth = finalOptions.hScale >= 100 ? finalOptions.width * finalOptions.hScale / 100 : finalOptions.width
+  // const scaleHeight = finalOptions.vScale >= 100 ? finalOptions.height * finalOptions.vScale / 100 : finalOptions.height
 
-  return mergeImgs(finalOptions, imgUnits).then((src) => {
-    const canvas = document.createElement('canvas')
-    canvas.width = finalOptions.viewWidth
-    canvas.height = finalOptions.viewHeight
-    const canvasContext = canvas.getContext('2d')
+  // return mergeImgs(finalOptions, imgUnits).then((src) => {
+  //   const canvas = document.createElement('canvas')
+  //   canvas.width = finalOptions.viewWidth
+  //   canvas.height = finalOptions.viewHeight
+  //   const canvasContext = canvas.getContext('2d')
 
-    let dLeft = 0
-    let dTop = 0
-    let dWidth = finalOptions.viewWidth
-    let dHeight = finalOptions.viewHeight
-    // 1. 根据viewWidth和viewHeight进行第一次等比缩放
-    if (finalOptions.viewWidth / finalOptions.viewHeight >= scaleWidth / scaleHeight) {
-      const scale = finalOptions.viewHeight / scaleHeight
-      dWidth = scaleWidth * scale
-      dHeight = scaleHeight * scale
-      dLeft = (finalOptions.viewWidth - dWidth) / 2
-    } else {
-      const scale = finalOptions.viewWidth / scaleWidth
-      dHeight = scaleHeight * scale
-      dWidth = scaleWidth * scale
-      dTop = (finalOptions.viewHeight - dHeight) / 2
-    }
+  //   let dLeft = 0
+  //   let dTop = 0
+  //   let dWidth = finalOptions.viewWidth
+  //   let dHeight = finalOptions.viewHeight
+  //   // 1. 根据viewWidth和viewHeight进行第一次等比缩放
+  //   if (finalOptions.viewWidth / finalOptions.viewHeight >= scaleWidth / scaleHeight) {
+  //     const scale = finalOptions.viewHeight / scaleHeight
+  //     dWidth = scaleWidth * scale
+  //     dHeight = scaleHeight * scale
+  //     dLeft = (finalOptions.viewWidth - dWidth) / 2
+  //   } else {
+  //     const scale = finalOptions.viewWidth / scaleWidth
+  //     dHeight = scaleHeight * scale
+  //     dWidth = scaleWidth * scale
+  //     dTop = (finalOptions.viewHeight - dHeight) / 2
+  //   }
 
-    // 2. 根据previewScale以（width/2, 0）进行第二次缩放，但依然只截取viewWidth和viewHeight部分
-    dLeft -= (finalOptions.previewScale - 100) / 100 * dWidth / 2
-    dWidth *= finalOptions.previewScale / 100
-    dHeight *= finalOptions.previewScale / 100
+  //   // 2. 根据previewScale以（width/2, 0）进行第二次缩放，但依然只截取viewWidth和viewHeight部分
+  //   dLeft -= (finalOptions.previewScale - 100) / 100 * dWidth / 2
+  //   dWidth *= finalOptions.previewScale / 100
+  //   dHeight *= finalOptions.previewScale / 100
 
-    return new Promise((resolve) => {
-      const image = new Image()
-      image.onload = () => {
-        canvasContext.drawImage(image, 0, 0, scaleWidth, scaleHeight, dLeft, dTop, dWidth, dHeight)
-        resolve(canvas.toDataURL('image/png'))
-      }
-      image.src = src
-    })
-  })
+  //   return new Promise((resolve) => {
+  //     const image = new Image()
+  //     image.onload = () => {
+  //       canvasContext.drawImage(image, 0, 0, scaleWidth, scaleHeight, dLeft, dTop, dWidth, dHeight)
+  //       resolve(canvas.toDataURL('image/png'))
+  //     }
+  //     image.src = src
+  //   })
+  // })
+  return mergeImgs(finalOptions, imgUnits)
 }
 
 /**

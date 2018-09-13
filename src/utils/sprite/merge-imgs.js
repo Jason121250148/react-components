@@ -35,13 +35,33 @@ function mergeImgs(options = {}, imgSets = []) {
   if (!isLegalOptions) return Promise.reject(new Error('options param is not completed, please check'))
   if (!isLegalImgSets) return Promise.reject(new Error('imgSets param is not completed, please check'))
 
-  const finalOptions = merge({}, defaultOptions, options)
+  const finalOptions = merge({}, defaultOptions, { viewWidth: options.width, viewHeight: options.height }, options)
   let finalImgSets = map(imgSets, img => merge({}, defaultImgSets, img))
 
+  const scaleWidth = finalOptions.hScale >= 100 ? finalOptions.width * finalOptions.hScale / 100 : finalOptions.width
+  const scaleHeight = finalOptions.vScale >= 100 ? finalOptions.height * finalOptions.vScale / 100 : finalOptions.height
   const canvas = document.createElement('canvas')
-  canvas.width = finalOptions.hScale >= 100 ? finalOptions.width * finalOptions.hScale / 100 : finalOptions.width
-  canvas.height = finalOptions.vScale >= 100 ? finalOptions.height * finalOptions.vScale / 100 : finalOptions.height
+  canvas.width = finalOptions.viewWidth
+  canvas.height = finalOptions.viewHeight
   const canvasContext = canvas.getContext('2d')
+
+  let dLeft = 0
+  let dTop = 0
+  let dWidth = finalOptions.viewWidth
+  let dHeight = finalOptions.viewHeight
+  let scale = 0
+  // 1. 根据viewWidth和viewHeight进行第一次等比缩放
+  if (finalOptions.viewWidth / finalOptions.viewHeight >= scaleWidth / scaleHeight) {
+    scale = finalOptions.viewHeight / scaleHeight
+    dWidth = scaleWidth * scale
+    dHeight = scaleHeight * scale
+    dLeft = (finalOptions.viewWidth - dWidth) / 2
+  } else {
+    scale = finalOptions.viewWidth / scaleWidth
+    dHeight = scaleHeight * scale
+    dWidth = scaleWidth * scale
+    dTop = (finalOptions.viewHeight - dHeight) / 2
+  }
 
   // 根据index和数组中的顺序将finalImgSets升序排序
   finalImgSets = sortBy(finalImgSets, ['index'])
@@ -69,6 +89,10 @@ function mergeImgs(options = {}, imgSets = []) {
         if (finalOptions.vScale >= 100) {
           top += finalOptions.scaleAnchorY / finalOptions.height * (finalOptions.vScale - 100) / 100 * finalOptions.height
         }
+        left = dLeft + left * scale
+        top = dTop + top * scale
+        width *= scale
+        height *= scale
         canvasContext.drawImage(image, 0, 0, img.width, img.height, left, top, width, height)
       })
     }).then(() => {

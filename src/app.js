@@ -6,7 +6,7 @@ import { SpriteTest, SpriteTimeTest } from './utils'
 
 export default class App extends Component {
   render() {
-    const MAIN = <SpriteTimeTest />
+    const MAIN = <SpriteTest />
     if (MAIN) return MAIN
 
     return (

@@ -19,7 +19,7 @@ class SpriteTest extends PureComponent {
       hScale: 100,
       scaleAnchorX: 1260 / 2,
       scaleAnchorY: 400,
-      previewScale: 100,
+      // previewScale: 200,
     }
     const imgUnits = [
       {
