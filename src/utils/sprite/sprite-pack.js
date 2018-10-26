@@ -12,6 +12,7 @@ function spritePack(options, blocks = []) {
     return new Error('options should have both maxWidth and maxHeight or none of them')
   }
   const finalOptions = merge({}, options)
+  const { maxWidth, maxHeight } = finalOptions
 
   let totalRoot
   function findNode(root, width, height) {
@@ -33,6 +34,10 @@ function spritePack(options, blocks = []) {
   }
 
   function growRight(width, height) {
+    if (totalRoot.width + width > maxWidth) {
+      return null
+    }
+
     totalRoot = {
       used: true,
       x: 0,
@@ -51,6 +56,10 @@ function spritePack(options, blocks = []) {
   }
 
   function growDown(width, height) {
+    if (totalRoot.height + height > maxHeight) {
+      return null
+    }
+
     totalRoot = {
       used: true,
       x: 0,
@@ -94,13 +103,12 @@ function spritePack(options, blocks = []) {
   newBlocks.sort((a, b) => b.width * b.height - a.width * a.height)
   const width  = newBlocks.length > 0 ? newBlocks[0].width : 0
   const height = newBlocks.length > 0 ? newBlocks[0].height : 0
-  const { maxWidth, maxHeight } = finalOptions
-  const hasMax = has(finalOptions, 'maxWidth') && has(finalOptions, 'maxHeight')
-  if (hasMax) {
-    totalRoot = { x: 0, y: 0, width: maxWidth, height: maxHeight }
-  } else {
-    totalRoot = { x: 0, y: 0, width, height }
-  }
+  // const hasMax = has(finalOptions, 'maxWidth') && has(finalOptions, 'maxHeight')
+  // if (hasMax) {
+  //   totalRoot = { x: 0, y: 0, width: maxWidth, height: maxHeight }
+  // } else {
+  totalRoot = { x: 0, y: 0, width, height }
+  // }
   const spriteBlocks = [] // 已经写入雪碧图的block
   const unSpriteBlocks = [] // 由于超出大小未写入雪碧图的block
   forEach(newBlocks, (block) => {
@@ -111,13 +119,15 @@ function spritePack(options, blocks = []) {
       newBlock.x = fit.x
       newBlock.y = fit.y
       spriteBlocks.push(newBlock)
-    } else if (hasMax) {
-        unSpriteBlocks.push(newBlock)
     } else {
-        const fit = growNode(block.width, block.height)
+      const fit = growNode(block.width, block.height)
+      if (fit === null) {
+        unSpriteBlocks.push(newBlock)
+      } else {
         newBlock.x = fit.x
         newBlock.y = fit.y
         spriteBlocks.push(newBlock)
+      }
     }
   })
 
